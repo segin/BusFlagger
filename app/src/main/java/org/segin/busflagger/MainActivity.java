@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         Spinner scheduleSpinner = (Spinner) findViewById(R.id.scheduleSpinner);
         Spinner routeSpinner = (Spinner) findViewById(R.id.routeSpinner);
         ArrayAdapter<CharSequence> adapter;
-        Log.d("BusFlagger",scheduleSpinner.getSelectedItem().toString().substring(0, 2).toLowerCase());
         switch(scheduleSpinner.getSelectedItem().toString().substring(0, 3).toLowerCase()) {
             default:
             case "wee":
