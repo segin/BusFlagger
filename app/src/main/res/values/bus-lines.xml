@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- This list is based on the data given by City Utilities of Springfield, MO
+         on https://www.cutransit.net/routes/ as of 7 August 2016 -->
+
+    <!-- Types of bus lines -->
+    <string-array name="line_types">
+        <item>Weekday Routes</item>
+        <item>Saturday &amp; Evening Routes</item>
+        <item>Sunday &amp; Holiday Routes</item>
+    </string-array>
+
+    <!-- Day routes -->
+    <string-array name="day_lines">
+        <item>2 - Dale - Lime</item>
+        <item>3 - Division - Orange</item>
+        <item>5 - Glenstone/National</item>
+        <item>6 - College - Black</item>
+        <item>7 - Campbell - Red</item>
+        <item>9 - Fort - Yellow</item>
+        <item>12 - National/Glenstone - Maroon</item>
+        <item>14 - Atlantic - Brown</item>
+        <item>31 - SE Loop - Aqua</item>
+        <item>35 - Industrial Express - Purple</item>
+        <item>36 - SW Loop - Pink</item>
+        <item>38 - North Loop - Green</item>
+    </string-array>
+
+    <!-- Saturday and Night routes -->
+    <string-array name="night_lines">
+        <item>22 - NE - Lime</item>
+        <item>25 - SE - Blue</item>
+        <item>26 - NW - Black</item>
+        <item>27 - SW - Red</item>
+        <item>31 - SE Loop - Aqua</item>
+        <item>36 - SW Loop - Pink</item>
+        <item>38 - North Loop - Green</item>
+    </string-array>
+
+    <!-- Sunday routes -->
+    <string-array name="sunday_lines">
+        <item>22 - NE - Lime</item>
+        <item>25 - SE - Blue</item>
+        <item>26 - NW - Black</item>
+        <item>27 - SW - Red</item>
+    </string-array>
+
+</resources>
