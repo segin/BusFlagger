@@ -15,14 +15,49 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select route:"
+        android:text="Select current schedule type:"
         android:id="@+id/textView" />
 
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner"
+        android:id="@+id/routeSpinner"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scheduleSpinner"
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select route:"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/scheduleSpinner"
+        android:layout_alignParentLeft="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Flag Driver!"
+        android:id="@+id/flagBtn"
+        android:layout_below="@+id/routeSpinner"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please note: Neither this app nor it&apos;s developer are affiliated with City Utilities of Springfield, MO."
+        android:id="@+id/textView3"
+        android:layout_below="@+id/flagBtn"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textStyle="italic" />
+
 </RelativeLayout>
