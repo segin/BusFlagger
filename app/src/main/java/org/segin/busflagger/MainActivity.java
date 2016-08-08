@@ -7,13 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.Menu;
+import android.view.View.OnClickListener;
 import android.view.MenuItem;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Button;
 import android.widget.ArrayAdapter;
 import android.widget.AdapterView;
+import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
         updateRouteSpinner();
         makeSpinnerDoStuff();
+        makeButtonDoStuff();
     }
 
     private void makeSpinnerDoStuff() {
@@ -74,13 +76,19 @@ public class MainActivity extends AppCompatActivity {
         routeSpinner.setAdapter(adapter);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
+    private void makeButtonDoStuff() {
+            Button flagBtn = (Button) findViewById(R.id.flagBtn);
+            flagBtn.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, ShowRoute.class);
+                    Spinner routeSpinner = (Spinner) findViewById(R.id.routeSpinner);
+                    String route = routeSpinner.getSelectedItem().toString();
+                    intent.putExtra("Route", route);
+                    startActivity(intent);
+                }
+            });
+        }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
