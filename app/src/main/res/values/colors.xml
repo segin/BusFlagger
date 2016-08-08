@@ -11,11 +11,11 @@
     <color name="route_Blue">#006bb6</color>
     <color name="route_Black">#000</color>
     <color name="route_Red">#ed1d24</color>
-    <color name="color_Yellow">#fff200</color>
-    <color name="color_Maroon">#af2760</color>
-    <color name="color_Brown">#885538</color>
-    <color name="color_Aqua">#00acc8</color>
-    <color name="color_Purple">#782b90</color>
-    <color name="color_Pink">#f48fa8</color>
-    <color name="color_Green">#466d42</color>
+    <color name="route_Yellow">#fff200</color>
+    <color name="route_Maroon">#af2760</color>
+    <color name="route_Brown">#885538</color>
+    <color name="route_Aqua">#00acc8</color>
+    <color name="route_Purple">#782b90</color>
+    <color name="route_Pink">#f48fa8</color>
+    <color name="route_Green">#466d42</color>
 </resources>
