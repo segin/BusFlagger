@@ -1,14 +1,23 @@
 package org.segin.busflagger;
 
+import android.os.Bundle;
 import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
+import android.widget.TextView;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -34,23 +43,24 @@ public class ShowRoute extends AppCompatActivity {
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
-    private final Runnable mHidePart2Runnable = new Runnable() {
-        @SuppressLint("InlinedApi")
-        @Override
-        public void run() {
-            // Delayed removal of status and navigation bar
+    /*    private final Runnable mHidePart2Runnable = new Runnable() {
+            @SuppressLint("InlinedApi")
+            @Override
+            public void run() {
+                // Delayed removal of status and navigation bar
 
-            // Note that some of these constants are new as of API 16 (Jelly Bean)
-            // and API 19 (KitKat). It is safe to use them, as they are inlined
-            // at compile-time and do nothing on earlier devices.
-            mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        }
-    };
+                // Note that some of these constants are new as of API 16 (Jelly Bean)
+                // and API 19 (KitKat). It is safe to use them, as they are inlined
+                // at compile-time and do nothing on earlier devices.
+                mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+
+            }
+        }; */
     private View mControlsView;
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
@@ -60,7 +70,7 @@ public class ShowRoute extends AppCompatActivity {
             if (actionBar != null) {
                 actionBar.show();
             }
-            mControlsView.setVisibility(View.VISIBLE);
+            // mControlsView.setVisibility(View.VISIBLE);
         }
     };
     private boolean mVisible;
@@ -84,6 +94,11 @@ public class ShowRoute extends AppCompatActivity {
             return false;
         }
     };
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,23 +110,19 @@ public class ShowRoute extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        mVisible = true;
-        mControlsView = findViewById(R.id.fullscreen_content_controls);
-        mContentView = findViewById(R.id.fullscreen_content);
+        String route = getIntent().getExtras().getString("Route");
+        Routes rte = new Routes(this, route);
 
-
-        // Set up the user interaction to manually show or hide the system UI.
-        mContentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggle();
-            }
-        });
-
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        View view = (View) findViewById(R.id.fullscreen_content);
+        view.setBackgroundColor(rte.getRouteColor());
+        TextView lblRoute = (TextView) view;
+        lblRoute.setText(rte.getRouteNumber());
+        int a = rte.getRouteColor() & 0x00FFFFFF;
+        Log.d("BusFlagger", "Color: " + Integer.toHexString(a));
+        a = ((a % 256 + (a / 256 % 256) + (a / 65536 % 256)) / 3) % 256;
+        Log.d("BusFlagger", "Brightness: " + Integer.toHexString(a));
+        lblRoute.setTextColor(a > 0x68 ? 0xFF000000 : 0xFFFFFFFF);
+        lblRoute.setTextSize(TypedValue.COMPLEX_UNIT_SP, 400);
     }
 
     @Override
@@ -149,12 +160,12 @@ public class ShowRoute extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-        mControlsView.setVisibility(View.GONE);
+        // mControlsView.setVisibility(View.GONE);
         mVisible = false;
 
         // Schedule a runnable to remove the status and navigation bar after a delay
-        mHideHandler.removeCallbacks(mShowPart2Runnable);
-        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
+        // mHideHandler.removeCallbacks(mShowPart2Runnable);
+        // mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
     }
 
     @SuppressLint("InlinedApi")
@@ -165,8 +176,8 @@ public class ShowRoute extends AppCompatActivity {
         mVisible = true;
 
         // Schedule a runnable to display UI elements after a delay
-        mHideHandler.removeCallbacks(mHidePart2Runnable);
-        mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
+        // mHideHandler.removeCallbacks(mHidePart2Runnable);
+        // mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
     }
 
     /**
@@ -176,5 +187,18 @@ public class ShowRoute extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 }
