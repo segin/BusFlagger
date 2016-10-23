@@ -104,9 +104,20 @@ public class ShowRoute extends AppCompatActivity {
         String route = getIntent().getExtras().getString("Route");
         Routes rte = new Routes(this, route);
 
+        View view = findViewById(R.id.fullscreen_content);
+        try {
+            view.setBackgroundColor(rte.getRouteColor());
+        } catch(NullPointerException e) {
+            Log.wtf("BusFlagger", "Cannot set flagging screen background colour due to NullPointerException: " + e.toString());
+        }
         View view = (View) findViewById(R.id.fullscreen_content);
         view.setBackgroundColor(rte.getRouteColor());
         TextView lblRoute = (TextView) view;
+        try {
+            lblRoute.setText(rte.getRouteNumber());
+        } catch(NullPointerException e) {
+            Log.wtf("BusFlagger", "Cannot set flagging screen text due to NullPointerException: " + e.toString());
+        }
         lblRoute.setText(rte.getRouteNumber());
         int a = rte.getRouteColor() & 0x00FFFFFF;
         Log.d("BusFlagger", "Color: " + Integer.toHexString(a));
