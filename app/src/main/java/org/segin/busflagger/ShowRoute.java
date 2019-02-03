@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -104,13 +105,12 @@ public class ShowRoute extends AppCompatActivity {
         String route = getIntent().getExtras().getString("Route");
         Routes rte = new Routes(this, route);
 
-        View view = findViewById(R.id.fullscreen_content);
+        View view = (View) findViewById(R.id.fullscreen_content);
         try {
             view.setBackgroundColor(rte.getRouteColor());
         } catch(NullPointerException e) {
             Log.wtf("BusFlagger", "Cannot set flagging screen background colour due to NullPointerException: " + e.toString());
         }
-        View view = (View) findViewById(R.id.fullscreen_content);
         view.setBackgroundColor(rte.getRouteColor());
         TextView lblRoute = (TextView) view;
         try {
@@ -123,8 +123,12 @@ public class ShowRoute extends AppCompatActivity {
         Log.d("BusFlagger", "Color: " + Integer.toHexString(a));
         a = ((a % 256 + (a / 256 % 256) + (a / 65536 % 256)) / 3) % 256;
         Log.d("BusFlagger", "Brightness: " + Integer.toHexString(a));
+        DisplayMetrics metrics = getApplicationContext().getResources().getDisplayMetrics();
         lblRoute.setTextColor(a > 0x68 ? 0xFF000000 : 0xFFFFFFFF);
-        lblRoute.setTextSize(TypedValue.COMPLEX_UNIT_SP, 400);
+        lblRoute.setTextSize(
+            TypedValue.COMPLEX_UNIT_SP,
+            (float) ((metrics.widthPixels < metrics.heightPixels ? metrics.widthPixels : metrics.heightPixels) / metrics.scaledDensity / lblRoute.getText().length())
+        );
     }
 
     @Override
